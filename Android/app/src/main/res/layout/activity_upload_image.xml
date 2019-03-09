@@ -7,8 +7,23 @@
         android:layout_height="match_parent"
         tools:context=".UploadImage">
 
-    <ImageView
+    <Button
+            android:text="@string/uploadImage_ChooseImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-            android:id="@+id/uploadImageSelectedImage"/>
+            android:layout_height="wrap_content" android:id="@+id/uploadImage_ChooseButton"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:onClick="chooseImage"/>
+    <Button
+            android:text="@string/uploadButton_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/uploadImage_UploadButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/uploadImage_ChooseButton" android:layout_marginEnd="8dp"
+            android:visibility="gone" android:onClick="uploadImage"/>
+    <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp" app:srcCompat="@mipmap/ic_launcher_round"
+            android:id="@+id/uploadImageSelectedImage" android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
 </android.support.constraint.ConstraintLayout>
