@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,7 +64,7 @@ public class UploadImage extends AppCompatActivity {
                     return;
                 }
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                        "http://192.168.17.118/Allergens",
+                        "http://192.168.17.118:3000/Allergens",
                         params,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -79,6 +80,8 @@ public class UploadImage extends AppCompatActivity {
                             }
                         }
                 );
+
+                Volley.newRequestQueue(getApplicationContext()).add(request);
 
 
 
