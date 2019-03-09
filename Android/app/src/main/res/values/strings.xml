@@ -2,4 +2,6 @@
     <string name="app_name">HackRuApp</string>
     <string name="uploadImage_ChooseImage">Choose Menu</string>
     <string name="uploadButton_upload">Scan Image!</string>
+    <string name="AllergenLabel">Allergens:</string>
+    <string name="otherAllergenText">Other(comma seperated)</string>
 </resources>
