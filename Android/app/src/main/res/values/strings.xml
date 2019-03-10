@@ -5,4 +5,8 @@
     <string name="AllergenLabel">Allergens:</string>
     <string name="otherAllergenText">Other(comma separated)</string>
     <string name="goToUpload">Upload a Menu!</string>
+    <string name="menuItemLabel">You may be able to eat some of the following (Please note, this ML app is still in
+        kindergarten and is intended to provide a narrowed down menu of possible foods. Please use your best judgement
+        on the remaining items, and check with your server if you are unsure.) :
+    </string>
 </resources>

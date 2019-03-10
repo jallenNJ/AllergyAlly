@@ -18,6 +18,10 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:orientation="vertical" android:id="@+id/menuItems_Layout"
                       android:gravity="center">
+            <TextView
+                    android:text="@string/menuItemLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:textStyle="bold|italic"/>
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

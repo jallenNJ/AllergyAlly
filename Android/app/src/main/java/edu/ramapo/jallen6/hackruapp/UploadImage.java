@@ -31,26 +31,30 @@ public class UploadImage extends AppCompatActivity {
 
     private final static int LOAD_IMG = 1;
 
-    private Bitmap selectedImage;
-    ImageView selectedPhoto;
+    private Bitmap selectedImage; //The bit map currently loaded into the photo
+    ImageView selectedPhoto; // The image view to display the selected images
 
-    private int[] checkBoxIds;
-    private String[][] checkBoxText;
-    private RelativeLayout loading;
+    private int[] checkBoxIds;  //The Ids of all the checkboxes to scan
+    private String[][] checkBoxText; //The text to send to the server, a double array due to old requirements
+    private RelativeLayout loading; //A spinning wheel for the app while it is loading
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_image);
 
+        //Get a reference to the view
         selectedPhoto = findViewById(R.id.uploadImageSelectedImage);
 
+        //Set up the arrays
         checkBoxIds = new int[] {R.id.eggCheck, R.id.milkCheck, R.id.fishCheck, R.id.shellFishCheckbox,
                 R.id.treeNutCheckBox, R.id.peanutCheckBox, R.id.wheatCheck, R.id.soyCheck, R.id.chocolateCheck};
 
         checkBoxText = new String[][] {{"Egg"}, {"Milk"}, {"Fish"}, {"ShellFish"}, {"TreeNut"},
                 {"Peanut"}, {"Wheat"}, {"Soy"}, {"Chocolate"}};
 
+
+        //Bind the onclick to the other button
         findViewById(R.id.uploadImageSelectedImage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,20 +73,20 @@ public class UploadImage extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             try {
                 final Uri imageUri = data.getData();
-                if(imageUri == null){
+                if(imageUri == null){ //Error shouldn't happen, but compile says its possible
                     Log.e("NullCheck", "imageURI (Selected image) was null");
                     return;
                 }
+
+                //Get the input stream of the file and get the byte code
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 selectedImage = BitmapFactory.decodeStream(imageStream);
 
                 selectedPhoto.setImageBitmap(selectedImage);
 
+                //Toggle the buttons
                 findViewById(R.id.uploadImage_ChooseButton).setVisibility(View.GONE);
                 findViewById(R.id.uploadImage_UploadButton).setVisibility(View.VISIBLE);
-
-
-
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -97,6 +101,7 @@ public class UploadImage extends AppCompatActivity {
 
 
     public String getStringImage(Bitmap bmp) {
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
@@ -151,8 +156,8 @@ public class UploadImage extends AppCompatActivity {
             return;
         }
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-               // "http://192.168.17.118:3000/Allergen",
-                "http://192.168.29.88:3000/Allergen",
+                "http://192.168.17.118:3000/Allergen",
+                //"http://192.168.29.88:3000/Allergen",
                 params,
                 new Response.Listener<JSONObject>() {
                     @Override
