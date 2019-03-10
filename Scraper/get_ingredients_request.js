@@ -1,4 +1,4 @@
-//const scrape = require('website-scraper');
+// Required packages
 const cheerio = require('cheerio');
 const request = require('request');
 
@@ -54,15 +54,17 @@ function get_recipe_links(food_items)
 			//console.log(url);
 			if (regex.test(url))
 			{
-				valid_urls.push('https' + url);
+				valid_urls.push('https:' + url);
 			}
 		}
+
 		recipe_obj[food_items[j]] = valid_urls;
 		k++;
+		
 		if (k == food_items_urls.length)
-			{
-				get_ingredients(recipe_obj);
-			}
+		{
+			get_ingredients(recipe_obj);
+		}
 		
 		});
 
@@ -74,25 +76,43 @@ function get_recipe_links(food_items)
 function get_ingredients(recipe_obj)
 {
 	console.log(recipe_obj);
-	/*for (let food in recipe_obj)
-	{
-		console.log(food + " -> " + recipe_obj[food]);
-	}*/
+	ingredient_obj = {};
 
 	Object.keys(recipe_obj).forEach(function(key){
 		console.log('key : ' + key + ', value : ' + recipe_obj[key])
+		let count = 1;
+		
+		let ingredient_list = []; // hold stringified text of list of ingredients for food item
+
+		// Get each food items ingredients
 		for (link of recipe_obj[key])
 		{
+			//console.log(count);
+			count++;
+			//console.log(link);
+			request({
+				url: link
+			}, function(err, res, body) {
+				if (err) 
+				{
+					return console.error(err);
+				}
 
-			console.log(link);
+				let $ = cheerio.load(body);
+				let ingredients = $('.o-Ingredients__m-Body');
+				ingredient_list.push(ingredients.text());
+				console.log("this is where it should add the ingredients");
+				ingredient_obj[key] += ingredient_list;
+
+
+				console.log(ingredient_list);
+				//console.log("size of list: " + ingredient_list.length + "contents: --> " + ingredient_list);
+			});
 		}
-	
 	})
 
-	for (link in recipe_obj)
-	{
-		console.log(link);
-	}
 
-	//return
+	Object.keys(ingredient_obj).forEach(function(key){
+		console.log('key : ' + key + ', value : ' +  ingredient_obj[key])
+	})
 }
