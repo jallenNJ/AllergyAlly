@@ -18,7 +18,7 @@ var endCallback
 function start_scraper(food_items, callback)
 {
 	endCallback = callback;
-	let json_obj = get_recipe_links(food_items);
+	get_recipe_links(food_items);
 }
 
 // Creates a JSON object containing name of food item as key and a list of recipe urls as the key
