@@ -4,4 +4,5 @@
     <string name="uploadButton_upload">Scan Image!</string>
     <string name="AllergenLabel">Allergens:</string>
     <string name="otherAllergenText">Other(comma seperated)</string>
+    <string name="goToUpload">Upload a Menu!</string>
 </resources>
