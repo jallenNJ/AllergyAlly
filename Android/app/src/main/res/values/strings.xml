@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">HackRuApp</string>
+    <string name="app_name">Allergy Ally</string>
     <string name="uploadImage_ChooseImage">Choose Menu</string>
     <string name="uploadButton_upload">Scan Image!</string>
     <string name="AllergenLabel">Allergens:</string>
-    <string name="otherAllergenText">Other(comma seperated)</string>
+    <string name="otherAllergenText">Other(comma separated)</string>
     <string name="goToUpload">Upload a Menu!</string>
 </resources>
