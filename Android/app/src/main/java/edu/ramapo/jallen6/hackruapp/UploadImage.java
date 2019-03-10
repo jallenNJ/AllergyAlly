@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -147,7 +148,16 @@ public class UploadImage extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(UploadImage.this, "Boom answer", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(UploadImage.this, "Boom answer", Toast.LENGTH_SHORT).show();
+                        try{
+                            JSONArray foods = response.getJSONArray("EdibleFood");
+                            Intent intent = new Intent(UploadImage.this,  UploadImage.class);
+                            intent.putExtra(MenuItems.ITEM_EXTRA, foods.toString());
+                            startActivity(intent);
+                            finish();
+                        } catch(JSONException e){
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
