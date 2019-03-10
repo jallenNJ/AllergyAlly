@@ -10,10 +10,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,6 +36,7 @@ public class UploadImage extends AppCompatActivity {
 
     private int[] checkBoxIds;
     private String[][] checkBoxText;
+    private RelativeLayout loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +57,7 @@ public class UploadImage extends AppCompatActivity {
                 chooseImage(view);
             }
         });
+        loading = findViewById(R.id.loadingPanel);
     }
 
 
@@ -112,6 +111,7 @@ public class UploadImage extends AppCompatActivity {
     }
 
     public void uploadImage(View v){
+        loading.setVisibility(View.VISIBLE);
         String base64Image = getStringImage(selectedImage);
 
         Log.i("ImageString", base64Image);
@@ -151,12 +151,14 @@ public class UploadImage extends AppCompatActivity {
             return;
         }
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                "http://192.168.17.118:3000/Allergen",
+               // "http://192.168.17.118:3000/Allergen",
+                "http://192.168.29.88:3000/Allergen",
                 params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                        // Toast.makeText(UploadImage.this, "Boom answer", Toast.LENGTH_SHORT).show();
+                        loading.setVisibility(View.GONE);
                         try{
                             String foods = response.getString("EdibleFood");
                             Intent intent = new Intent(UploadImage.this,  MenuItems.class);
@@ -171,6 +173,7 @@ public class UploadImage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loading.setVisibility(View.GONE);
                         Toast.makeText(UploadImage.this, "Error", Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
