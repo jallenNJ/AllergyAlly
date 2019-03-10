@@ -49,8 +49,8 @@ public class UploadImage extends AppCompatActivity {
         checkBoxIds = new int[] {R.id.eggCheck, R.id.milkCheck, R.id.fishCheck, R.id.shellFishCheckbox,
                 R.id.treeNutCheckBox, R.id.peanutCheckBox, R.id.wheatCheck, R.id.soyCheck, R.id.chocolateCheck};
 
-        checkBoxText = new String[][] {{"Egg", "Eggs"}, {"Milk"}, {"Fish"}, {"ShellFish"}, {"Tree Nut"},
-                {"Peanut"}, {"Wheat"}, {"Soy"}, {"Chocolate" , "Cocoa"}};
+        checkBoxText = new String[][] {{"Egg"}, {"Milk"}, {"Fish"}, {"ShellFish"}, {"TreeNut"},
+                {"Peanut"}, {"Wheat"}, {"Soy"}, {"Chocolate"}};
 
         findViewById(R.id.uploadImageSelectedImage).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +113,7 @@ public class UploadImage extends AppCompatActivity {
     public void uploadImage(View v){
         String base64Image = getStringImage(selectedImage);
 
-        //Log.i("ImageString", base64Image);
+        Log.i("ImageString", base64Image);
         ArrayList<String> allergens = new ArrayList<>();
         for(int i =0; i < checkBoxIds.length; i++){
             CheckBox current = findViewById(checkBoxIds[i]);

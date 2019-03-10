@@ -15,6 +15,8 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="vertical" android:id="@+id/menuItems_Layout"/>
+                      android:orientation="vertical" android:id="@+id/menuItems_Layout"
+                      android:gravity="center">
+        </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

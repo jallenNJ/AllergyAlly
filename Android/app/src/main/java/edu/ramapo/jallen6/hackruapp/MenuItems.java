@@ -3,6 +3,7 @@ package edu.ramapo.jallen6.hackruapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import org.json.JSONObject;
 
 
 public class MenuItems extends AppCompatActivity {
-    public static String parsedData;
+
     public static final String ITEM_EXTRA = "items";
 
     @Override
@@ -32,12 +33,13 @@ public class MenuItems extends AppCompatActivity {
         }
         arrData= arrData.trim();
         String[] arr = arrData.substring(1, arrData.length()-1).split(",");
-        
+
         LinearLayout layout = findViewById(R.id.menuItems_Layout);
         for(String allergen:arr){
 
             TextView listItem = new TextView(this);
             listItem.setText(allergen.trim().replace("'",""));
+            listItem.setGravity(View.TEXT_ALIGNMENT_CENTER);
             layout.addView(listItem);
         }
 
