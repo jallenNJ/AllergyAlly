@@ -161,7 +161,7 @@ public class UploadImage extends AppCompatActivity {
                             Intent intent = new Intent(UploadImage.this,  MenuItems.class);
                             intent.putExtra(MenuItems.ITEM_EXTRA, foods);
                             startActivity(intent);
-                            finish();
+                          //  finish();
                         } catch(JSONException e){
                             e.printStackTrace();
                         }

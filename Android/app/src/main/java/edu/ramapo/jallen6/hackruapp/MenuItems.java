@@ -3,6 +3,7 @@ package edu.ramapo.jallen6.hackruapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.json.JSONArray;
@@ -31,8 +32,7 @@ public class MenuItems extends AppCompatActivity {
         }
         arrData= arrData.trim();
         String[] arr = arrData.substring(1, arrData.length()-1).split(",");
-
-
+        
         LinearLayout layout = findViewById(R.id.menuItems_Layout);
         for(String allergen:arr){
 
@@ -42,5 +42,9 @@ public class MenuItems extends AppCompatActivity {
         }
 
 
+    }
+
+    public void goBack(View v){
+        finish();
     }
 }
