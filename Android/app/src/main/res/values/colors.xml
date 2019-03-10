@@ -6,4 +6,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="blueBackground">#add8e6</color>
     <color name="buttonColor">#8D0000</color>
+    <color name="white">#ffffff</color>
 </resources>
