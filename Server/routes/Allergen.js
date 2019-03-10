@@ -2,6 +2,7 @@ const fs = require('fs')
 var express = require('express')
 var GCloud = require('MenuImageProcessor')
 var WebScraper = require('WebScraper')
+
 var router = express.Router();
 /*
     TODO: 1. Add the database call for the allergies
@@ -49,6 +50,7 @@ router.post('/', async function(req, res, next){
     res.send({"EdibleFood" : UreturnArray});
     return;
 })
+
 
 //parses arrays into items
 function parseMenu(MenuText) {
@@ -118,6 +120,7 @@ function removeBadFood(MenuFoods, AllergyList) {
     return MenuFoods;
 }
 
+//FoodList contains all of the foods from the menu that the user can eat
 function getFoodName(FoodList) {
     FullNameArray = []
     for(Food of FoodList){
