@@ -38,7 +38,7 @@ public class MenuItems extends AppCompatActivity {
         for(String allergen:arr){
 
             TextView listItem = new TextView(this);
-            listItem.setText(allergen.trim().replace("'",""));
+            listItem.setText(allergen.trim().replace("\"",""));
             listItem.setGravity(View.TEXT_ALIGNMENT_CENTER);
             layout.addView(listItem);
         }
