@@ -7,11 +7,14 @@ const base_url = 'http://foodnetwork.com/search/';
 let food_items_urls = [];
 let food_items = ['pizza', 'burger', 'sandwich', 'japanese-pancake'];
 
-start_scraper(food_items);
+start_scraper(() => { console.log('hello') });
+
+var v_callback;
 
 // Start web scraping
-function start_scraper()
+function start_scraper(callback)
 {
+	v_callback = callback;
 	let json_obj = get_recipe_links(food_items);
 }
 
@@ -104,16 +107,12 @@ function get_ingredients(recipe_obj)
 				let ingredients = $('.o-Ingredients__m-Body');
 				ingredient_list.push(ingredients.text().replace(/\s\s+/g, ' ').replace(/[0-9/:]/g, ""));
 				console.log("this is where it should add the ingredients");
-				//console.log('key: ----->>> ' + ingredient_key );
 				
 				// Add to JSON object
-
 				ingredient_obj[ingredient_key].push(ingredient_list);
 				console.log("@@@@@@@@@@@@@@@@@" + JSON.stringify(ingredient_obj));
-
-
-				//console.log(ingredient_list);
-				//console.log("size of list: " + ingredient_list.length + "contents: --> " + ingredient_list);
+				
+				v_callback();
 			});
 		}
 		console.log(ingredient_obj);
@@ -123,4 +122,5 @@ function get_ingredients(recipe_obj)
 	Object.keys(ingredient_obj).forEach(function(key){
 		console.log('key : ' + key + ', value : ' +  ingredient_obj[key])
 	})
+
 }
