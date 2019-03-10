@@ -1,12 +1,17 @@
+var exports = module.exports = {};
+exports.Scrape = function(items, callback) {
+	start_scraper(items, callback);
+}
+
 // Required packages
 const cheerio = require('cheerio');
 const request = require('request');
 const rpromise = require('request-promise');
 
-let bob = ['pizza', 'burger', 'sandwich', 'japanese-pancake'];
+//let bob = ['pizza', 'burger', 'sandwich', 'japanese-pancake'];
 //let bob = ['japanese pancake']
 
-start_scraper(bob, (a) => { console.log(a) });
+//start_scraper(bob, (a) => { console.log(a) });
 
 var endCallback
 
