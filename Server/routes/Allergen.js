@@ -1,7 +1,7 @@
 const fs = require('fs')
 var express = require('express')
 var GCloud = require('MenuImageProcessor')
-var wbParser = require('get_ingredients_request')
+//var wbParser = require('get_ingredients_request')
 var router = express.Router();
 /*
     TODO: 1. Add the database call for the allergies
@@ -29,11 +29,11 @@ router.post('/', async function(req, res, next){
     AllergyList = getAllergyFoods(RequestBody["Allergens"]);
     PossibleFoods = removeBadFood(AllFoods, AllergyList);
     FoodNames = getFoodName(AllFoods);
-    await wbParser.Scrape(FoodNames, function(data){
+  /*  await wbParser.Scrape(FoodNames, function(data){
         for(Food in FoodNames){
             IngredentsArrays = data[Food];
             console.log(IngredentsArrays)
-            /*
+            
             for(IngredentsString of IngredentsArrays){
                 for(Allergy in AllergyList){
                     if(IngredentsString.contain(Allergy)){
@@ -42,15 +42,15 @@ router.post('/', async function(req, res, next){
                     }
                 }
             }
-            */
+            
         }
-
-        res.status(200);
-        res.send({"EdibleFood" : data});
+*/
+      res.status(200);
+        res.send({"EdibleFood" : FoodNames});
         return;
 
     });
-})
+//});
 
 //parses arrays into items
 function parseMenu(MenuText) {
@@ -120,14 +120,60 @@ function removeBadFood(MenuFoods, AllergyList) {
     return MenuFoods;
 }
 
+//FoodList contains all of the foods from the menu that the user can eat
 function getFoodName(FoodList) {
     FullNameArray = []
     for(Food of FoodList){
+        //Reg ex string to split on every word that does not have a capital letter in it
         NameArray = Food.split(/\b[a-z].*?\b/g);
         FullNameArray.push(NameArray[0]);
     }
 
-    return FullNameArray;
+    //Making a new array for the modified food strings
+    ModifiedFoodStringsArr=[];
+
+    //Remove item at spot 0 because that will be the title
+    FullNameArray.shift();
+
+    //Iterating through fullNameArray (which contains all possible foods, with capital letters)
+    //Trying to get it as close to only containing the name of the food as possible
+    for(index of FullNameArray){
+        if(index.includes("Burger")){
+            //Find where the word burger is in the string
+            var burgerIndex=index.indexOf("Burger");
+            //Adding 6 to burger index to get to end of the word Burger
+            burgerIndex+=6;
+            
+            var modifiedFoodString=index.substring(0, burgerIndex);
+            //Adding modified string to arr
+            ModifiedFoodStringsArr.push(modifiedFoodString);
+        }
+
+        else if(index.includes("$")){
+            //Find where $ is in the string
+            var dollarIndex=index.indexOf("$");
+            //Subtracting 1 from dollarIndex because we want to remove starting with $
+            dollarIndex--;
+
+            var modifiedDollarString=index.substring(0, dollarIndex);
+            //Adding modified string to arr
+            ModifiedFoodStringsArr.push(modifiedDollarString);
+        }
+        else if(index.includes("Not")){
+            continue;
+        }
+        else if(index.includes("Soup")){
+            continue;
+        }
+        else if(index.includes("Sandwiches")){
+            continue;
+        }
+        //If nothing was changed
+        else{
+            ModifiedFoodStringsArr.push(index);
+        }
+    }
+    return ModifiedFoodStringsArr;
 }
 
 module.exports = router;
