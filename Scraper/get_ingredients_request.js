@@ -173,13 +173,13 @@ async function query_ingredients(food_items, result)
 			let ingredients = $('.o-Ingredients__m-Body');
 			result.push(ingredients.text().replace(/\s\s+/g, ' ').replace(/[0-9/:]/g, ""));
 			query_ingredients(food_items, result);
-		});
+		})
 	}
 	catch (err)
 	{
 		console.error(err);
 	}
-
+	// joe
 
 
 	query_ingredients(food_items, result);
