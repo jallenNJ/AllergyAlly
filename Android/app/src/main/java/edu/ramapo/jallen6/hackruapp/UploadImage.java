@@ -150,9 +150,9 @@ public class UploadImage extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                        // Toast.makeText(UploadImage.this, "Boom answer", Toast.LENGTH_SHORT).show();
                         try{
-                            JSONArray foods = response.getJSONArray("EdibleFood");
-                            Intent intent = new Intent(UploadImage.this,  UploadImage.class);
-                            intent.putExtra(MenuItems.ITEM_EXTRA, foods.toString());
+                            String foods = response.getString("EdibleFood");
+                            Intent intent = new Intent(UploadImage.this,  MenuItems.class);
+                            intent.putExtra(MenuItems.ITEM_EXTRA, foods);
                             startActivity(intent);
                             finish();
                         } catch(JSONException e){
