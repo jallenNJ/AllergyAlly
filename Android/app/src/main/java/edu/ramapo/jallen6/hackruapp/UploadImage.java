@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,6 +25,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class UploadImage extends AppCompatActivity {
 
@@ -31,6 +35,9 @@ public class UploadImage extends AppCompatActivity {
     private Bitmap selectedImage;
     ImageView selectedPhoto;
 
+    private int[] checkBoxIds;
+    private String[][] checkBoxText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +45,11 @@ public class UploadImage extends AppCompatActivity {
 
         selectedPhoto = findViewById(R.id.uploadImageSelectedImage);
 
+        checkBoxIds = new int[] {R.id.eggCheck, R.id.milkCheck, R.id.fishCheck, R.id.shellFishCheckbox,
+                R.id.treeNutCheckBox, R.id.peanutCheckBox, R.id.wheatCheck, R.id.soyCheck, R.id.chocolateCheck};
+
+        checkBoxText = new String[][] {{"Egg", "Eggs"}, {"Milk"}, {"Fish"}, {"ShellFish"}, {"Tree Nut"},
+                {"Peanut"}, {"Wheat"}, {"Soy"}, {"Chocolate" , "Cocoa"}};
     }
 
 
@@ -93,10 +105,37 @@ public class UploadImage extends AppCompatActivity {
     public void uploadImage(View v){
         String base64Image = getStringImage(selectedImage);
 
-        Log.i("ImageString", base64Image);
+        //Log.i("ImageString", base64Image);
+        ArrayList<String> allergens = new ArrayList<>();
+        for(int i =0; i < checkBoxIds.length; i++){
+            CheckBox current = findViewById(checkBoxIds[i]);
+            if(!current.isChecked()){
+                continue;
+            }
+            allergens.addAll(Arrays.asList(checkBoxText[i]));
+
+
+        }
+
+        TextView otherAllergen = findViewById(R.id.uploadImage_OtherText);
+        if(otherAllergen.getText().length() > 0){
+            String[] allOther = otherAllergen.getText().toString().split(",");
+            allergens.addAll(Arrays.asList(allOther));
+        }
+
+        StringBuilder allergensBuilder = new StringBuilder();
+        for(String allergen:allergens){
+            allergensBuilder.append(allergen);
+            allergensBuilder.append(",");
+        }
+        if(allergensBuilder.length() > 0){
+            allergensBuilder.deleteCharAt(allergensBuilder.length()-1);
+        }
+
         JSONObject params = new JSONObject(); //Add allergies as a string array
         try {
-            params.put("menu", base64Image);
+            params.put("Menu", base64Image);
+            params.put("Allergens", allergensBuilder.toString());
         } catch (JSONException e) {
             Toast.makeText(UploadImage.this, "Failed to put", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
