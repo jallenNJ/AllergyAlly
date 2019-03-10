@@ -12,7 +12,7 @@ start_scraper(food_items);
 // Start web scraping
 function start_scraper()
 {
-	get_recipe_links(food_items);
+	let json_obj = get_recipe_links(food_items);
 }
 
 // Creates a JSON object containing name of food item as key and a list of recipe urls as the key
@@ -48,6 +48,7 @@ function get_recipe_links(food_items)
 			});
 
 		let valid_urls = [];
+		
 		// Filter urls to match only recipes
 		for (url of real_urls)
 		{
@@ -76,7 +77,7 @@ function get_recipe_links(food_items)
 function get_ingredients(recipe_obj)
 {
 	console.log(recipe_obj);
-	ingredient_obj = {};
+	let ingredient_obj = {};
 
 	Object.keys(recipe_obj).forEach(function(key){
 		console.log('key : ' + key + ', value : ' + recipe_obj[key])
@@ -84,12 +85,13 @@ function get_ingredients(recipe_obj)
 		
 		let ingredient_list = []; // hold stringified text of list of ingredients for food item
 
+		ingredient_obj[key] = [];
 		// Get each food items ingredients
 		for (link of recipe_obj[key])
 		{
-			//console.log(count);
 			count++;
-			//console.log(link);
+			let ingredient_key = key;
+			
 			request({
 				url: link
 			}, function(err, res, body) {
@@ -100,17 +102,23 @@ function get_ingredients(recipe_obj)
 
 				let $ = cheerio.load(body);
 				let ingredients = $('.o-Ingredients__m-Body');
-				ingredient_list.push(ingredients.text());
+				ingredient_list.push(ingredients.text().replace(/\s\s+/g, ' ').replace(/[0-9/:]/g, ""));
 				console.log("this is where it should add the ingredients");
-				ingredient_obj[key] += ingredient_list;
+				//console.log('key: ----->>> ' + ingredient_key );
+				
+				// Add to JSON object
+
+				ingredient_obj[ingredient_key].push(ingredient_list);
+				console.log("@@@@@@@@@@@@@@@@@" + JSON.stringify(ingredient_obj));
 
 
-				console.log(ingredient_list);
+				//console.log(ingredient_list);
 				//console.log("size of list: " + ingredient_list.length + "contents: --> " + ingredient_list);
 			});
 		}
+		console.log(ingredient_obj);
 	})
-
+	console.log(ingredient_obj);
 
 	Object.keys(ingredient_obj).forEach(function(key){
 		console.log('key : ' + key + ', value : ' +  ingredient_obj[key])
