@@ -18,6 +18,7 @@ function start_scraper(food_items, callback)
 // Creates a JSON object containing name of food item as key and a list of recipe urls as the key
 function get_recipe_links(food_items)
 {
+
 	// Variables to hold urls to hold food items
 	const base_url = 'http://foodnetwork.com/search/';
 	
