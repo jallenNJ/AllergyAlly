@@ -80,7 +80,18 @@ function get_ingredients(recipe_obj)
 	}*/
 
 	Object.keys(recipe_obj).forEach(function(key){
-		console.log('key : ' + key + 
+		console.log('key : ' + key + ', value : ' + recipe_obj[key])
+		for (link of recipe_obj[key])
+		{
+			console.log(link);
+		}
+	
+	})
+
+	for (link in recipe_obj)
+	{
+		console.log(link);
+	}
 
 	//return
 }
