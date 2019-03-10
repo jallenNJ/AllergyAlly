@@ -1,19 +1,19 @@
 // Required packages
 const cheerio = require('cheerio');
 const request = require('request');
-const promise = require('request-promise');
+const rpromise = require('request-promise');
 
-//let bob = ['pizza', 'burger', 'sandwich', 'japanese-pancake'];
-let bob = ['japanese pancake']
+let bob = ['pizza', 'burger', 'sandwich', 'japanese-pancake'];
+//let bob = ['japanese pancake']
 
-start_scraper(bob, () => { console.log('hello') });
+start_scraper(bob, (a) => { console.log(a) });
 
-var v_callback;
+var endCallback
 
 // Start web scraping
 function start_scraper(food_items, callback)
 {
-	v_callback = callback;
+	endCallback = callback;
 	let json_obj = get_recipe_links(food_items);
 }
 
@@ -80,18 +80,86 @@ function get_recipe_links(food_items)
 	
 }
 
+
+async function findIngredientsAtLink(link, arr) {
+	return new Promise(resolve => {
+		request(link, function (error, response, body) {
+			if(error){
+				console.error(error);
+				resolve(false);
+			}
+			let $ = cheerio.load(body);
+			let ingredients = $('.o-Ingredients__m-Body');
+			arr.push(ingredients.text().replace(/\s\s+/g, ' ').replace(/[0-9/:]/g, "").toLowerCase());
+			resolve(true);
+		});
+	  });
+}
+
+async function findIngredientsForKey(source, arr){
+	const promises = [];
+	for(var link of source) {
+		promises.push(findIngredientsAtLink(link, arr)); 
+	}
+	return Promise.all(promises);
+
+}
+
+
 // Get ingredients for each food items and return as JSON object
-async function get_ingredients(recipe_obj)
+ async function get_ingredients(recipe_obj)
 {
-	console.log(recipe_obj);
+
+	var formattedObj = {};
+	for (var food in recipe_obj) {
+		if (recipe_obj.hasOwnProperty(food)) {
+			formattedObj[food] = [];
+			 await findIngredientsForKey(recipe_obj[food], formattedObj[food]);
+
+		}
+	}
+
+	endCallback(formattedObj);
+
+
+
+			/*formattedObj[food] = [];
+			let thisKey = food;
+			for( link of recipe_obj[thisKey]){
+				promises.push(rpromise(link)
+					.then(async function (htmlString) {
+						
+						
+						let $ = cheerio.load(htmlString);
+						let ingredients = $('.o-Ingredients__m-Body');
+						formattedObj[thisKey].push(ingredients.text().replace(/\s\s+/g, ' ').replace(/[0-9/:]/g, ""));
+						resolve(true);
+						// Process html...
+					})
+					.catch(async function (err) {
+						console.error(err);
+						resolve(false);
+					}));
+			}*/
+
+
+	/*console.log(recipe_obj);
 	let ingredient_obj = {};
 	let ingredient_list = [];
 
+	targetParsings = Object.keys(recipe_obj).length;
 	Object.keys(recipe_obj).forEach(async function(key) {
-		console.log(recipe_obj[key]);
-		ingredient_list = await query_ingredients(recipe_obj[key], []); 
+	//	console.log(recipe_obj[key]);
+		
+		try{
+			await query_ingredients(recipe_obj[key], [], key); 
+		} catch(ex){
+			console.error(ex);
+			
+		}
 	});
-	console.log(ingredient_list);
+	return;*/
+}
 
 /*
 	let key_count_2 = Object.keys(recipe_obj).length;
@@ -147,43 +215,8 @@ async function get_ingredients(recipe_obj)
 	})
 	*/
 
-}
-
-// Query ingredients recursively
-async function query_ingredients(food_items, result)
-{
-	console.log("foodd ---- > " + food_items);
-	if (food_items == undefined || food_items.length == 0)
-	{
-		console.log(result);
-		return result;
-	}
-
-	let current = food_items.shift();
-	try
-	{
-		var response = await request({
-			url: current
-		}, function(err, res, body) {
-			if (err) 
-			{
-				return console.error(err);
-			}
-			let $ = cheerio.load(body);
-			let ingredients = $('.o-Ingredients__m-Body');
-			result.push(ingredients.text().replace(/\s\s+/g, ' ').replace(/[0-9/:]/g, ""));
-			query_ingredients(food_items, result);
-		})
-	}
-	catch (err)
-	{
-		console.error(err);
-	}
-	// joe
 
 
-	query_ingredients(food_items, result);
 
 
-}
 
