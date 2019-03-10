@@ -51,6 +51,13 @@ public class UploadImage extends AppCompatActivity {
 
         checkBoxText = new String[][] {{"Egg", "Eggs"}, {"Milk"}, {"Fish"}, {"ShellFish"}, {"Tree Nut"},
                 {"Peanut"}, {"Wheat"}, {"Soy"}, {"Chocolate" , "Cocoa"}};
+
+        findViewById(R.id.uploadImageSelectedImage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage(view);
+            }
+        });
     }
 
 
