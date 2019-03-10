@@ -63,6 +63,7 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
-Scraper/node_modules/*
 
+Scraper/node_modules/*
 Server/node_modules/*
+
