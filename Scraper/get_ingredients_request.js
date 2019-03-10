@@ -6,7 +6,6 @@ exports.Scrape = function(items, callback) {
 // Required packages
 const cheerio = require('cheerio');
 const request = require('request');
-const rpromise = require('request-promise');
 
 //let bob = ['pizza', 'burger', 'sandwich', 'japanese-pancake'];
 //let bob = ['japanese pancake']
