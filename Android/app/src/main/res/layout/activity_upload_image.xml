@@ -31,7 +31,7 @@
             android:layout_marginTop="50dp"/>
     <ImageView
             android:layout_width="200dp"
-            android:layout_height="200dp" app:srcCompat="@mipmap/ic_launcher_round"
+            android:layout_height="200dp" app:srcCompat="@drawable/menu_place_holder"
             android:id="@+id/uploadImageSelectedImage" android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
     <TableLayout

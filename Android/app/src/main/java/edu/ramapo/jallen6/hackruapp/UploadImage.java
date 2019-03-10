@@ -114,7 +114,7 @@ public class UploadImage extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         String base64Image = getStringImage(selectedImage);
 
-        Log.i("ImageString", base64Image);
+       // Log.i("ImageString", base64Image);
         ArrayList<String> allergens = new ArrayList<>();
         for(int i =0; i < checkBoxIds.length; i++){
             CheckBox current = findViewById(checkBoxIds[i]);
