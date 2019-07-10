@@ -8,4 +8,4 @@ This app was created at HackRU Spring 19 and won 2nd place for the Wakefern awar
 It makes use of:
 - Android Front End
 - NodeJS backend using Google Cloud Vision API
-- Web scrapper written in Javascript using the JSSoup API 
+- Web scraper written in Javascript using the JSSoup API 
